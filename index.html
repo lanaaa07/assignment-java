@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Shop</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1> Mini Shop</h1>
+        <div class="products" id="products"></div>
+    </div>
+
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="close-btn" onclick="closeModal()">&times;</span>
+            <div class="modal-icon" id="modalIcon"></div>
+            <h2 class="modal-title" id="modalTitle"></h2>
+            <div class="modal-price" id="modalPrice"></div>
+            <p class="modal-description" id="modalDescription"></p>
+            <button class="buy-btn" onclick="buyProduct()">Add to Cart</button>
+        </div>
+    </div>
+
+    <script>
+        const products = [
+            {
+                id: 1,
+                name: "Wireless Headphones",
+                price: "$79.99",
+                image: "images/Kraken-Kitty-V3-Line_KV.jpg",
+                description: "Premium wireless headphones with noise cancellation, 30-hour battery life, and crystal-clear sound quality. Perfect for music lovers and travelers."
+            },
+            {
+                id: 2,
+                name: "Smart Watch",
+                price: "$199.99",
+                image: "images/Screenshot 2025-11-28 185101.jpg",
+                description: "Feature-packed smartwatch with fitness tracking, heart rate monitor, GPS, and smartphone notifications. Water-resistant and stylish design."
+            },
+            {
+                id: 3,
+                name: "Coffee Maker",
+                price: "$49.99",
+                image: "images/Saeco-Lirika-Plus.jpg",
+                description: "Programmable coffee maker with auto-brew timer, 12-cup capacity, and keep-warm function. Start your mornings right with freshly brewed coffee."
+            },
+            {
+                id: 4,
+                name: "Backpack",
+                price: "$39.99",
+                image: "images/Mr.-Serious-To-go-backpack-front-New.jpeg",
+                description: "Durable and spacious backpack with laptop compartment, multiple pockets, and ergonomic design. Perfect for work, school, or travel."
+            }
+        ];
+
+        function renderProducts() {
+            const container = document.getElementById('products');
+            products.forEach(product => {
+                const card = document.createElement('div');
+                card.className = 'product-card';
+                card.onclick = () => openModal(product);
+                card.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}" class="product-image">
+                    <div class="product-name">${product.name}</div>
+                    <div class="product-price">${product.price}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function openModal(product) {
+            document.getElementById('modalIcon').innerHTML = `<img src="${product.image}" alt="${product.name}" class="modal-image">`;
+            document.getElementById('modalTitle').textContent = product.name;
+            document.getElementById('modalPrice').textContent = product.price;
+            document.getElementById('modalDescription').textContent = product.description;
+            document.getElementById('modal').classList.add('active');
+        }
+
+        renderProducts();
+    </script>
+</body>
+</html>
