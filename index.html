@@ -19,7 +19,6 @@
             <h2 class="modal-title" id="modalTitle"></h2>
             <div class="modal-price" id="modalPrice"></div>
             <p class="modal-description" id="modalDescription"></p>
-            <button class="buy-btn" onclick="buyProduct()">Add to Cart</button>
         </div>
     </div>
 
@@ -76,6 +75,16 @@
             document.getElementById('modalPrice').textContent = product.price;
             document.getElementById('modalDescription').textContent = product.description;
             document.getElementById('modal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.remove('active');
+        }
+        window.onclick = function(e) {
+            const modal = document.getElementById('modal');
+            if (e.target === modal) {
+                closeModal();
+            }
         }
 
         renderProducts();
