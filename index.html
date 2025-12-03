@@ -3,45 +3,49 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini Shop</title>
+    <title>Mini Shop - Your Online Store</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <!-- Navigation Bar -->
     <nav>
-        <div class="logo">Mini Shop</div>
-        <ul>
-            <li><a href="#home">Home</a></li>
-            <li><a href="#products">Products</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
-        </ul>
+        <div class="nav-content">
+            <div class="logo">Mini Shop</div>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#products">Products</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
     </nav>
 
     <div class="container">
-        <h1> Mini Shop</h1>
+        <h1>Featured Products</h1>
         <div class="products" id="products"></div>
     </div>
 
     <div class="modal" id="modal">
         <div class="modal-content">
             <span class="close-btn" onclick="closeModal()">&times;</span>
-            <div class="modal-icon" id="modalIcon"></div>
-            <h2 class="modal-title" id="modalTitle"></h2>
-            <div class="modal-price" id="modalPrice"></div>
-            <p class="modal-description" id="modalDescription"></p>
+            <div id="modalIcon"></div>
+            <div class="modal-body">
+                <h2 class="modal-title" id="modalTitle"></h2>
+                <div class="modal-price" id="modalPrice"></div>
+                <p class="modal-description" id="modalDescription"></p>
+                <button class="add-to-cart-btn" onclick="addToCart()">Add to Cart</button>
+            </div>
         </div>
     </div>
 
-    <!-- Footer -->
     <footer>
         <div class="footer-content">
             <div class="footer-links">
-                <a href="#privacy">JavaScript</a>
-                
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+                <a href="#support">Support</a>
             </div>
             <div class="copyright">
-                &copy; Assignment
+                &copy; 2024 Mini Shop - All Rights Reserved
             </div>
         </div>
     </footer>
@@ -75,8 +79,66 @@
                 price: "$39.99",
                 image: "images/Mr.-Serious-To-go-backpack-front-New.jpeg",
                 description: "Durable and spacious backpack with laptop compartment, multiple pockets, and ergonomic design. Perfect for work, school, or travel."
+            },
+            {
+                id: 5,
+                name: "Bluetooth Speaker",
+                price: "$59.99",
+                image: "images/71R6fEX2LFL.jpg",
+                description: "Portable Bluetooth speaker with 360-degree sound, waterproof design, and 12-hour battery life. Perfect for outdoor adventures and parties."
+            },
+            {
+                id: 6,
+                name: "Laptop Stand",
+                price: "$34.99",
+                image: "images/61AS07l2cBL._AC_UF1000,1000_QL80_.jpg",
+                description: "Adjustable aluminum laptop stand with ergonomic design. Improves posture and increases airflow to keep your device cool."
+            },
+            {
+                id: 7,
+                name: "Wireless Mouse",
+                price: "$29.99",
+                image: "images/the-best-wireless-mice-for-2025_s91x.jpg",
+                description: "Ergonomic wireless mouse with precision tracking, rechargeable battery, and silent clicks. Compatible with all devices."
+            },
+            {
+                id: 8,
+                name: "Phone Case",
+                price: "$19.99",
+                image: "images/MGFD4.jpg",
+                description: "Premium protective phone case with shock absorption, slim design, and raised edges to protect your screen and camera."
+            },
+            {
+                id: 9,
+                name: "USB-C Hub",
+                price: "$44.99",
+                image: "images/61QbS525pgL.jpg",
+                description: "7-in-1 USB-C hub with HDMI, USB 3.0, SD card reader, and charging port. Essential for modern laptops and tablets."
+            },
+            {
+                id: 10,
+                name: "Desk Lamp",
+                price: "$54.99",
+                image: "images/71Xa0fzUiGL.jpg",
+                description: "LED desk lamp with adjustable brightness, color temperature control, and USB charging port. Eye-friendly lighting for work and study."
+            },
+            {
+                id: 11,
+                name: "Water Bottle",
+                price: "$24.99",
+                image: "images/Reusable-Water-Bottles.png",
+                description: "Insulated stainless steel water bottle that keeps drinks cold for 24 hours or hot for 12 hours. BPA-free and eco-friendly."
+            },
+            {
+                id: 12,
+                name: "Yoga Mat",
+                price: "$39.99",
+                image: "images/81bOJUr8+VL._AC_SL1500_.jpg",
+                description: "Premium non-slip yoga mat with extra cushioning and carrying strap. Perfect for yoga, pilates, and home workouts."
             }
         ];
+
+        let currentProduct = null;
 
         function renderProducts() {
             const container = document.getElementById('products');
@@ -86,24 +148,37 @@
                 card.onclick = () => openModal(product);
                 card.innerHTML = `
                     <img src="${product.image}" alt="${product.name}" class="product-image">
-                    <div class="product-name">${product.name}</div>
-                    <div class="product-price">${product.price}</div>
+                    <div class="product-info">
+                        <div class="product-name">${product.name}</div>
+                        <div class="product-price">${product.price}</div>
+                    </div>
                 `;
                 container.appendChild(card);
             });
         }
 
         function openModal(product) {
+            currentProduct = product;
             document.getElementById('modalIcon').innerHTML = `<img src="${product.image}" alt="${product.name}" class="modal-image">`;
             document.getElementById('modalTitle').textContent = product.name;
             document.getElementById('modalPrice').textContent = product.price;
             document.getElementById('modalDescription').textContent = product.description;
             document.getElementById('modal').classList.add('active');
+            document.body.style.overflow = 'hidden';
         }
 
         function closeModal() {
             document.getElementById('modal').classList.remove('active');
+            document.body.style.overflow = 'auto';
         }
+
+        function addToCart() {
+            if (currentProduct) {
+                alert(`Added ${currentProduct.name} to cart! 🛒`);
+                closeModal();
+            }
+        }
+
         window.onclick = function(e) {
             const modal = document.getElementById('modal');
             if (e.target === modal) {
